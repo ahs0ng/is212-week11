@@ -37,11 +37,13 @@ class OrderProcessor:
             
     def generate_receipt(self, order, total_price):
         # Step 5: Generate receipt
-        receipt = {
-            "customer_id": order["customer_id"],
-            "total_price": total_price,
-            "items": order["items"],
-            "discount": order.get("discount_code"),
-        }
+        receipt = f"Customer ID: {order['customer_id']}\n"
+        receipt += "Items:\n"
+        for item in order["items"]:
+            receipt += f"- {item['name']}: {item['quantity']} x ${item['price']}\n"
+        receipt += f"Total: ${total_price:.2f}\n"
+
+        # Step 6: Send confirmation email
+        print(f"Sending email to customer {order['customer_id']} with receipt:\n{receipt}")
         return receipt
     
