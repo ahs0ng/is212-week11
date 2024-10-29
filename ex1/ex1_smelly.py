@@ -42,3 +42,4 @@ class OrderProcessor:
             "discount": order.get("discount_code"),
         }
         return receipt
+    
