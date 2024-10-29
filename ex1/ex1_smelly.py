@@ -1,9 +1,10 @@
 class OrderProcessor:
     def process_order(self, order):
         self.validation(order)
-        self.apply_discounts(order)
+        total_price = self.total_prices(order)
+        discounted = self.apply_discounts(order, total_price)
         self.update_inventory(order)
-        return self.generate_reciept(order, self.total_prices(order))
+        return self.generate_reciept(order, discounted)
     
     def validation(self, order):
         # Step 1: Validate order details
@@ -19,12 +20,13 @@ class OrderProcessor:
             total_price += item["price"] * item["quantity"]
         return total_price
     
-    def apply_discounts(self, order):
+    def apply_discounts(self, order, total_price):
             # Step 3: Apply discounts if applicable
         if order.get("discount_code") == "SUMMER20":
             total_price *= 0.8  # 20% discount
         elif order.get("discount_code") == "WELCOME10":
             total_price *= 0.9  # 10% discount
+        return total_price
 
     def update_inventory(self, order):
         # Step 4: Update inventory
@@ -33,7 +35,7 @@ class OrderProcessor:
             item_quantity = item["quantity"]
             print(f"Updating inventory for {item_name}: -{item_quantity} units")
             
-    def generate_reciept(self, order, total_price):
+    def generate_receipt(self, order, total_price):
         # Step 5: Generate receipt
         receipt = {
             "customer_id": order["customer_id"],
