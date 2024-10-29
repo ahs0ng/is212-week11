@@ -4,7 +4,7 @@ class OrderProcessor:
         total_price = self.total_prices(order)
         discounted = self.apply_discounts(order, total_price)
         self.update_inventory(order)
-        return self.generate_reciept(order, discounted)
+        return self.generate_receipt(order, discounted)
     
     def validation(self, order):
         # Step 1: Validate order details
